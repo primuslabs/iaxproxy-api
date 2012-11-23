@@ -1,9 +1,24 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+    IAXProxy Reference API Implementation
+    Copyright (C) 2012 iaxproxy.org 
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.iaxproxy.provisioning;
 
+import org.iaxproxy.provisioning.resources.UserResource;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -13,12 +28,11 @@ import org.apache.log4j.DailyRollingFileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
+import org.iaxproxy.provisioning.resources.ListResource;
 
 import org.restlet.Application;
 import org.restlet.Restlet;
-import org.restlet.data.ChallengeScheme;
 import org.restlet.routing.Router;
-import org.restlet.security.ChallengeAuthenticator;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -95,7 +109,7 @@ public class RestfulInterface extends Application {
         logger.info("Version " + Version.getSpecification() + " (" + Version.getImplementation() + ") Ready to rock.");
         Router router = new Router(getContext());
         router.attach("/v1/user/{username}", UserResource.class);
-
+        router.attach("/v1/list", ListResource.class);
         return router;
     }
 }
